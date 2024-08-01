@@ -7,8 +7,11 @@
 1. Vars and Inits
 2. Set Header
 3. Init Menu
-4. Init Input
-5. Init Milestones
+4. Init Home Slider
+5. Init Scrolling
+6. Init Isotope
+7. Init Testimonials Slider
+8. Init Input
 
 
 ******************************/
@@ -28,7 +31,6 @@ $(document).ready(function()
 	var menu = $('.menu');
 	var menuActive = false;
 	var burger = $('.hamburger');
-	var ctrl = new ScrollMagic.Controller();
 
 	setHeader();
 
@@ -48,8 +50,11 @@ $(document).ready(function()
 	});
 
 	initMenu();
+	initHomeSlider();
+	initIsotope();
+	initTestimonialsSlider();
+	initScrolling();
 	initInput();
-	initMilestones();
 
 	/* 
 
@@ -124,7 +129,110 @@ $(document).ready(function()
 
 	/* 
 
-	4. Init Input
+	4. Init Home Slider
+
+	*/
+
+	function initHomeSlider()
+	{
+		if($('.home_slider').length)
+		{
+			var homeSlider = $('.home_slider');
+			homeSlider.owlCarousel(
+			{
+				items:1,
+				autoplay:false,
+				loop:true,
+				nav:false,
+				dots:false,
+				smartSpeed:1200
+			});
+		}
+	}
+
+	/* 
+
+	5. Init Scrolling
+
+	*/
+
+	function initScrolling()
+	{
+		if($('.home_page_nav ul li a').length)
+		{
+			var links = $('.home_page_nav ul li a');
+	    	links.each(function()
+	    	{
+	    		var ele = $(this);
+	    		var target = ele.data('scroll-to');
+	    		ele.on('click', function(e)
+	    		{
+	    			e.preventDefault();
+	    			$(window).scrollTo(target, 1500, {offset: -90, easing: 'easeInOutQuart'});
+	    		});
+	    	});
+		}	
+	}
+
+	/* 
+
+	6. Init Isotope
+
+	*/
+
+	function initIsotope()
+	{
+		if($('.item_grid').length)
+		{
+			var grid = $('.item_grid').isotope({
+				itemSelector: '.item',
+	            getSortData:
+	            {
+	            	price: function(itemElement)
+	            	{
+	            		var priceEle = $(itemElement).find('.destination_price').text().replace( 'From $', '' );
+	            		return parseFloat(priceEle);
+	            	},
+	            	name: '.destination_title a'
+	            },
+	            animationOptions:
+	            {
+	                duration: 750,
+	                easing: 'linear',
+	                queue: false
+	            }
+	        });
+		}
+	}
+
+	/* 
+
+	7. Init Testimonials Slider
+
+	*/
+
+	function initTestimonialsSlider()
+	{
+		if($('.testimonials_slider').length)
+		{
+			var testSlider = $('.testimonials_slider');
+			testSlider.owlCarousel(
+			{
+				animateOut: 'fadeOut',
+    			animateIn: 'flipInX',
+				items:1,
+				autoplay:true,
+				loop:true,
+				smartSpeed:1200,
+				dots:false,
+				nav:false
+			});
+		}
+	}
+
+	/* 
+
+	8. Init Input
 
 	*/
 
@@ -161,63 +269,6 @@ $(document).ready(function()
 				});
 				
 			});
-		}
-	}
-
-	/* 
-
-	5. Initialize Milestones
-
-	*/
-
-	function initMilestones()
-	{
-		if($('.milestone_counter').length)
-		{
-			var milestoneItems = $('.milestone_counter');
-
-	    	milestoneItems.each(function(i)
-	    	{
-	    		var ele = $(this);
-	    		var endValue = ele.data('end-value');
-	    		var eleValue = ele.text();
-
-	    		/* Use data-sign-before and data-sign-after to add signs
-	    		infront or behind the counter number (+, k, etc) */
-	    		var signBefore = "";
-	    		var signAfter = "";
-
-	    		if(ele.attr('data-sign-before'))
-	    		{
-	    			signBefore = ele.attr('data-sign-before');
-	    		}
-
-	    		if(ele.attr('data-sign-after'))
-	    		{
-	    			signAfter = ele.attr('data-sign-after');
-	    		}
-
-	    		var milestoneScene = new ScrollMagic.Scene({
-		    		triggerElement: this,
-		    		triggerHook: 'onEnter',
-		    		reverse:false
-		    	})
-		    	.on('start', function()
-		    	{
-		    		var counter = {value:eleValue};
-		    		var counterTween = TweenMax.to(counter, 4,
-		    		{
-		    			value: endValue,
-		    			roundProps:"value", 
-						ease: Circ.easeOut, 
-						onUpdate:function()
-						{
-							document.getElementsByClassName('milestone_counter')[i].innerHTML = signBefore + counter.value + signAfter;
-						}
-		    		});
-		    	})
-			    .addTo(ctrl);
-	    	});
 		}
 	}
 });
