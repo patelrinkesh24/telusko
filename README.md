@@ -92,5 +92,5 @@ taxi-booking/
 Contributions are welcome! Please fork the repository and create a pull request with your changes.
 
 ## Connect with Me
-Feel free to explore this repository, fork it, and provide feedback. Connect with me on [LinkedIn](https://www.linkedin.com/in/rinkesh-patel/) to discuss potential opportunities or collaborations.
+Feel free to explore this repository, fork it, and provide feedback. Connect with me on [LinkedIn](https://www.linkedin.com/in/patelrinkesh2499/) to discuss potential opportunities or collaborations.
 
