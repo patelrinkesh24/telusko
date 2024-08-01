@@ -8,7 +8,7 @@
 2. Set Header
 3. Init Menu
 4. Init Input
-5. Init Milestones
+5. Init Isotope
 
 
 ******************************/
@@ -28,7 +28,6 @@ $(document).ready(function()
 	var menu = $('.menu');
 	var menuActive = false;
 	var burger = $('.hamburger');
-	var ctrl = new ScrollMagic.Controller();
 
 	setHeader();
 
@@ -49,7 +48,7 @@ $(document).ready(function()
 
 	initMenu();
 	initInput();
-	initMilestones();
+	initIsotope();
 
 	/* 
 
@@ -166,58 +165,48 @@ $(document).ready(function()
 
 	/* 
 
-	5. Initialize Milestones
+	5. Init Isotope
 
 	*/
 
-	function initMilestones()
+	function initIsotope()
 	{
-		if($('.milestone_counter').length)
+		var sortingButtons = $('.product_sorting_btn');
+		
+		if($('.item_grid').length)
 		{
-			var milestoneItems = $('.milestone_counter');
+			var grid = $('.item_grid').isotope({
+				itemSelector: '.item',
+	            getSortData:
+	            {
+	            	price: function(itemElement)
+	            	{
+	            		var priceEle = $(itemElement).find('.destination_price').text().replace( 'From $', '' );
+	            		return parseFloat(priceEle);
+	            	},
+	            	name: '.destination_title a'
+	            },
+	            animationOptions:
+	            {
+	                duration: 750,
+	                easing: 'linear',
+	                queue: false
+	            }
+	        });
 
-	    	milestoneItems.each(function(i)
-	    	{
-	    		var ele = $(this);
-	    		var endValue = ele.data('end-value');
-	    		var eleValue = ele.text();
-
-	    		/* Use data-sign-before and data-sign-after to add signs
-	    		infront or behind the counter number (+, k, etc) */
-	    		var signBefore = "";
-	    		var signAfter = "";
-
-	    		if(ele.attr('data-sign-before'))
-	    		{
-	    			signBefore = ele.attr('data-sign-before');
-	    		}
-
-	    		if(ele.attr('data-sign-after'))
-	    		{
-	    			signAfter = ele.attr('data-sign-after');
-	    		}
-
-	    		var milestoneScene = new ScrollMagic.Scene({
-		    		triggerElement: this,
-		    		triggerHook: 'onEnter',
-		    		reverse:false
-		    	})
-		    	.on('start', function()
-		    	{
-		    		var counter = {value:eleValue};
-		    		var counterTween = TweenMax.to(counter, 4,
-		    		{
-		    			value: endValue,
-		    			roundProps:"value", 
-						ease: Circ.easeOut, 
-						onUpdate:function()
-						{
-							document.getElementsByClassName('milestone_counter')[i].innerHTML = signBefore + counter.value + signAfter;
-						}
-		    		});
-		    	})
-			    .addTo(ctrl);
-	    	});
+	        // Sort based on the value from the sorting_type dropdown
+	        sortingButtons.each(function()
+	        {
+	        	$(this).on('click', function()
+	        	{
+	        		var parent = $(this).parent().parent().find('.sorting_text');
+		        		parent.text($(this).text());
+		        		var option = $(this).attr('data-isotope-option');
+		        		option = JSON.parse( option );
+	    				grid.isotope( option );
+	        	});
+	        });
 		}
 	}
+	
 });

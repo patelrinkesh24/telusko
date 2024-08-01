@@ -8,7 +8,7 @@
 2. Set Header
 3. Init Menu
 4. Init Input
-5. Init Milestones
+5. Init Google Map
 
 
 ******************************/
@@ -28,7 +28,7 @@ $(document).ready(function()
 	var menu = $('.menu');
 	var menuActive = false;
 	var burger = $('.hamburger');
-	var ctrl = new ScrollMagic.Controller();
+	var map;
 
 	setHeader();
 
@@ -49,7 +49,7 @@ $(document).ready(function()
 
 	initMenu();
 	initInput();
-	initMilestones();
+	initGoogleMap();
 
 	/* 
 
@@ -130,9 +130,9 @@ $(document).ready(function()
 
 	function initInput()
 	{
-		if($('.newsletter_input').length)
+		if($('.inpt').length)
 		{
-			var inpt = $('.newsletter_input');
+			var inpt = $('.inpt');
 			inpt.each(function()
 			{
 				var ele = $(this);
@@ -164,60 +164,58 @@ $(document).ready(function()
 		}
 	}
 
-	/* 
+	 /* 
 
-	5. Initialize Milestones
+	5. Init Google Map
 
 	*/
 
-	function initMilestones()
+	function initGoogleMap()
 	{
-		if($('.milestone_counter').length)
+		var myLatlng = new google.maps.LatLng(34.063685,-118.272936);
+    	var mapOptions = 
+    	{
+    		center: myLatlng,
+	       	zoom: 14,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			draggable: true,
+			scrollwheel: false,
+			zoomControl: true,
+			zoomControlOptions:
+			{
+				position: google.maps.ControlPosition.RIGHT_CENTER
+			},
+			mapTypeControl: false,
+			scaleControl: false,
+			streetViewControl: false,
+			rotateControl: false,
+			fullscreenControl: true,
+			styles:
+			[
+			  {
+			    "featureType": "road.highway",
+			    "elementType": "geometry.fill",
+			    "stylers": [
+			      {
+			        "color": "#ffeba1"
+			      }
+			    ]
+			  }
+			]
+    	}
+
+    	// Initialize a map with options
+    	map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+		// Re-center map after window resize
+		google.maps.event.addDomListener(window, 'resize', function()
 		{
-			var milestoneItems = $('.milestone_counter');
-
-	    	milestoneItems.each(function(i)
-	    	{
-	    		var ele = $(this);
-	    		var endValue = ele.data('end-value');
-	    		var eleValue = ele.text();
-
-	    		/* Use data-sign-before and data-sign-after to add signs
-	    		infront or behind the counter number (+, k, etc) */
-	    		var signBefore = "";
-	    		var signAfter = "";
-
-	    		if(ele.attr('data-sign-before'))
-	    		{
-	    			signBefore = ele.attr('data-sign-before');
-	    		}
-
-	    		if(ele.attr('data-sign-after'))
-	    		{
-	    			signAfter = ele.attr('data-sign-after');
-	    		}
-
-	    		var milestoneScene = new ScrollMagic.Scene({
-		    		triggerElement: this,
-		    		triggerHook: 'onEnter',
-		    		reverse:false
-		    	})
-		    	.on('start', function()
-		    	{
-		    		var counter = {value:eleValue};
-		    		var counterTween = TweenMax.to(counter, 4,
-		    		{
-		    			value: endValue,
-		    			roundProps:"value", 
-						ease: Circ.easeOut, 
-						onUpdate:function()
-						{
-							document.getElementsByClassName('milestone_counter')[i].innerHTML = signBefore + counter.value + signAfter;
-						}
-		    		});
-		    	})
-			    .addTo(ctrl);
-	    	});
-		}
+			setTimeout(function()
+			{
+				google.maps.event.trigger(map, "resize");
+				map.setCenter(myLatlng);
+			}, 1400);
+		});
 	}
+	
 });
