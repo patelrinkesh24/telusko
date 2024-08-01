@@ -17,20 +17,11 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-from taxibooking import views
 
 urlpatterns = [
     path('',include('travello.urls')),
-    path('',include('taxibooking.urls')),
     path('admin/', admin.site.urls),
-    path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/login/',views.login,name='login'),
-    #changed line 1
-    path('accounts/',include('django.contrib.auth.urls')),
-    path('signup/', views.register, name='register'),
-    # path('',include("django.contrib.auth.urls")),
-    # path('accounts/login/',views.login,name='login'),
+    path('accounts/',include('accounts.urls'))
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

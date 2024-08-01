@@ -16,46 +16,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/hire.css' %}">
-<style>
-	#imgbx1
-	{
-		height: 250px;
-		width: 250px;
-	}
-	#imgbx2
-	{
-		height: 250px;
-		width: 250px;
-	}
-	#imgbx3
-	{
-		height: 250px;
-		width: 250px;
-	}
-	#imgbx4
-	{
-		height: 250px;
-		width: 250px;
-	}
-	#imgbx5
-	{
-		height: 250px;
-		width: 250px;
-	}
-	#imgbx6
-	{
-		height: 250px;
-		width: 250px;
-	}
-
-
-
-</style>
 </head>
 <body>
 
 <div class="super_container">
-
+	
 	<!-- Header -->
 
 	<header class="header">
@@ -67,15 +32,10 @@
 							<div class="logo"><a href="">Taxi Booking System</a></div>
 							<nav class="main_nav">
 								<ul class="d-flex flex-row align-items-start justify-content-start">
-									<li class="active"><a href="{% url 'taxibooking:index' %}">Home</a></li>
-									<li><a href="{% url 'taxibooking:view' %}">View</a></li>
-									<li><a href="{% url 'taxibooking:register' %}">Register</a></li>
-									{% if user.is_authenticated %}
-										<li>{{ user.username }}</li>
-									{% else %}
-									<li><a href="{% url 'taxibooking:login' %}">Log In</a></li>
-									{% endif %}
-
+									<li class="active"><a href="index.html">Home</a></li>
+									<li><a href="contact.html">Contact</a></li>
+									<li><a href="accounts/register">Register</a></li>
+									<li><a href="accounts/login">Log In</a></li>
 
 								</ul>
 							</nav>
@@ -104,16 +64,16 @@
 		</div>
 	</header>
 
-
-
+	
+	
 	<!-- Home -->
 
 	<div class="home">
-
+		
 		<!-- Home Slider -->
 		<div class="home_slider_container">
 			<div class="owl-carousel owl-theme home_slider">
-
+				
 				<!-- Slide -->
 				<div class="owl-item">
 					<div class="background_image" style="background-image:url({% static 'images/unitedkingdom.jpg' %})"></div>
@@ -142,20 +102,15 @@
 					<div class="home_search_container">
 						<div class="home_search_title">Book your trip</div>
 						<div class="home_search_content">
-							<!-- ############################################################################################################## -->
-							<form action="login" class="home_search_form" id="home_search_form" method="POST">
-								{% csrf_token %}
+							<form action="#" class="home_search_form" id="home_search_form">
 								<div class="d-flex flex-lg-row flex-column align-items-start justify-content-lg-between justify-content-start">
 									<input type="text" class="search_input search_input_1" placeholder="Pick up Address" required="required">
 									<input type="text" class="search_input search_input_2" placeholder="Drop off Address" required="required">
-									<input type="date" class="search_input search_input_3" placeholder="Pick up Date" required="required">
-									<input type="time" class="search_input search_input_4" placeholder="Pick up Time" required="required">
-									<input type="time" class="search_input search_input_5" placeholder="Mobile" required="required">
-									<input type="time" class="search_input search_input_6" placeholder="Payment" required="required">
-									<a href="{% url 'taxibooking:login' %}"><button class="home_search_button">Confirm</button></a>
+									<input type="text" class="search_input search_input_3" placeholder="Pick up Date" required="required">
+									<input type="text" class="search_input search_input_4" placeholder="Pick up Time" required="required">
+									<button class="home_search_button">Confirm</button>
 								</div>
 							</form>
-							<!-- ############################################################################################################## -->
 						</div>
 					</div>
 				</div>
@@ -197,7 +152,7 @@
 							<!-- Intro Item -->
 							<div class="col-lg-4 intro_col">
 								<div class="intro_item d-flex flex-row align-items-end justify-content-start">
-									<div><img style="height:75px; width:100px;" src="{% static 'images/rental_taxi.png' %}" alt=""></div>
+									<div><img style="height:75px;width:100px;" src="{% static 'images/rental_taxi.png' %}" alt=""></div>
 									<div class="intro_content">
 										<div class="intro_title">Rentals</div>
 										<div class="intro_subtitle"><p>Packages start at 1hr & can be extended upto 12 hrs!</p></div>
@@ -220,38 +175,34 @@
 					<div class="section_title"><h2>Tranportation</h2></div>
 				</div>
 			</div>
-
+							
 							<div class="mid_container">
 								<div class="head-sec"><span class="bs-pra"></span></div>
 								<div class="mid-pannel">
-									<div class="row">
-									<div class="col-4">
 									<div class="box1">
-										<img id="imgbx1" src="{% static 'images/airport.jfif' %}">
+										<img style="height:221; width:223;" src="{% static 'images/airport.jfif' %}">
 										<div class="f_16"><h5>Airport Transport</h5></div>
 									</div>
-									</div>
 									<div class="box1">
-										<img id="imgbx2" src="{% static 'images/station.jpg' %}">
+										<img src="{% static 'images/station.jpg' %}">
 										<div class="f_16"><h5>Station Transport</h5></div>
 									</div>
 									<div class="box1">
-										<img id="imgbx3" src="{% static 'images/airport.jfif' %}">
+										<img src="{% static 'images/airport.jfif' %}">
 										<div class="f_16"><h5>Cruiseport Transport</h5></div>
 									</div>
 									<div class="box1">
-										<img id="imgbx4" src="{% static 'images/corporate.jpg' %}">
+										<img src="{% static 'images/corporate.jpg' %}">
 										<div class="f_16"><h5>Corporate Transport</h5> </div>
 									</div>
 									<div class="box1">
-										<img id="imgbx5" src="{% static 'images/group.jpg' %}">
+										<img src="{% static 'images/group.jpg' %}">
 										<div class="f_16"><h5>Group Transport</h5> </div>
 									</div>
 									<div class="box1">
-										<img id="imgbx6" src="{% static 'images/sightseeing.jpg' %}">
+										<img src="{% static 'images/sightseeing.jpg' %}">
 										<div class="f_16"><h5>Sightseeing Transport</h5> </div>
 									</div>
-								</div>
 								</div>
 								<div class="clr"></div>
 							</div>
@@ -266,7 +217,7 @@
 			<div class="row">
 				<div class="col-xl-8">
 					<div class="news_container">
-
+						
 						<!-- News Post -->
 						<div class="news_post d-flex flex-md-row flex-column align-items-start justify-content-start">
 							<div class="news_post_image"><img src="{% static 'images/clean_car.png' %}" alt=""></div>
